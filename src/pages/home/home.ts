@@ -10,8 +10,9 @@ export class HomePage {
   coins:Array<any> = [];
   coinPrices: Array<any> = [];
   errorMessage: string;
+  searchedCoin: string = '';
   constructor(public navCtrl: NavController, private dataService:DataService) {
-   // this.getCoins();
+   this.getCoinPrice();
   }
     getCoins(){
       this.dataService.getCoins()
@@ -20,13 +21,14 @@ export class HomePage {
           this.coins = coinInfo;
         });
       }
-    getCoinPrice(coinInfo:any){
+    getCoinPrice(){
       let data: Array<any>;
-      for (var coin of Object.keys(coinInfo)) {
+      for (var coin of Object.keys(this.searchedCoin)) {
         this.dataService.getCoinPrice(coin)
           .subscribe((coinsPrice) => {
               data = coinsPrice;
-              this.coinPrices.push(data);
+              this.coins.push(data);
+              console.log(data);
         })
       }
     }

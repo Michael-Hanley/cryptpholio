@@ -1,7 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-item>
-      <ion-input type="text" placeholder="Search Cryptpholio"></ion-input>
+      <ion-searchbar type="text" 
+      placeholder="Search Cryptpholio" 
+      [(ngModel)]="searchedCoin"
+      (ionInput)="getCoinPrice($event)">
+      </ion-searchbar>
       <button item-right ion-button><ion-icon name="add"></ion-icon></button>
     </ion-item>
   </ion-navbar>
