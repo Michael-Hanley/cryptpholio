@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-item>
+      <ion-input type="text" placeholder="Search Cryptpholio"></ion-input>
+      <button item-right ion-button><ion-icon name="add"></ion-icon></button>
+    </ion-item>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
   <ion-card *ngFor="let coin of coins | keyValueFilter; let i = index">
     <ion-item>
       {{ coin?.value.CoinName }}

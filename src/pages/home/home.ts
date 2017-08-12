@@ -11,7 +11,7 @@ export class HomePage {
   coinPrices: Array<any> = [];
   errorMessage: string;
   constructor(public navCtrl: NavController, private dataService:DataService) {
-    this.getCoins();
+   // this.getCoins();
   }
     getCoins(){
       this.dataService.getCoins()
