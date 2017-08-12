@@ -7,8 +7,42 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+  <ion-card *ngFor="let coin of coins | keyValueFilter; let i = index">
+    <ion-item>
+      {{ coin?.value.CoinName }}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="football" item-start large></ion-icon> 
+
+<!-- 
+      Instead of football, coin image. 
+      
+      -->
+      <h2>Market Cap</h2>
+      <p>250,000,000</p>
+    </ion-item>
+    <ion-item>
+      <span item-left>  
+        <h2>Value</h2>
+        <p>USD</p> <!--- make this a changeable option in profile -->
+        <p>BTC</p>
+        <p>ETH</p>
+      </span>
+      <span item-right>  
+        <h2>Portfolio Value</h2>
+        <p>USD</p> <!--- make this a changeable option in profile -->
+        <p>BTC</p>
+        <p>ETH</p>
+      </span>
+    </ion-item>
+    <ion-item>
+      <span item-left>My ((Coin name)):</span>
+      <ion-input type="text"></ion-input>
+      <button ion-button icon-left item-end>
+        Update
+      </button>
+    </ion-item>
+
+  </ion-card>
 </ion-content>
