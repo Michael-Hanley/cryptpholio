@@ -50,10 +50,10 @@
         </span>
       </ion-item>
       <ion-item>
-        <span item-left>My {{allCoins[coin]?.Name}}:</span>
-        <ion-input type="text" [(ngModel)]="enteredAmount[i]"></ion-input>
-        <button ion-button icon-left item-end (click)="myPortfolioValues(i)">
-          Update
+        <ion-input type="text" [(ngModel)]="enteredAmount[i]"
+        placeholder="Enter {{allCoins[coin]?.Name}}"></ion-input>
+        <button color="danger" ion-button item-end>
+          <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item>
     </div>

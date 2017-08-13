@@ -28,19 +28,6 @@ export class HomePage {
           this.allCoins = coinInfo;
         });
       }
-      /*
-    getCoinPrice(){
-      let data: Array<any>;
-      for (var coin of Object.keys(this.searchedCoin)) {
-        this.dataService.getCoinPrice(coin)
-          .subscribe((coinsPrice) => {
-              data = coinsPrice;
-              this.coins.push(data);
-              console.log(this.coins);
-        })
-      }
-    }
-    */
     getCoinPrice(){
       this.dataService.getCoinPrice(
         this.searchedCoin = this.searchedCoin.toUpperCase())
@@ -104,7 +91,6 @@ export class HomePage {
       }
     }
     myPortfolioValues(i:number,){
-      //myAmount[i].USD = this.myCoinsPrice[i].USD *
       this.myAmount.splice(i, 1, this.enteredAmount[i]);
     }
 
