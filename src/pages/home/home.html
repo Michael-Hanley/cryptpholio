@@ -45,13 +45,13 @@
         </span>
         <span item-right>
           <h2>Portfolio Value</h2>
-          <p>USD {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.USD | number : '1.2-5'}}</p> <!--- make this a changeable option in profile -->
-          <p>BTC {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.BTC | number : '1.2-5'}}</p>
-          <p>ETH {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.ETH | number : '1.2-5'}}</p>
+          <p>USD {{ myAmount[i] | stackValue: myCoinsPrice[i]?.USD | number : '1.2-5'}}</p> <!--- make this a changeable option in profile -->
+          <p>BTC {{ myAmount[i] | stackValue: myCoinsPrice[i]?.BTC | number : '1.2-5'}}</p>
+          <p>ETH {{ myAmount[i] | stackValue: myCoinsPrice[i]?.ETH | number : '1.2-5'}}</p>
         </span>
       </ion-item>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="enteredAmount[i]"
+        <ion-input type="text" [(ngModel)]="myAmount[i]"
         placeholder="Enter {{allCoins[coin]?.Name}}"></ion-input>
         <button (click)="removeCoin(i)" color="danger" ion-button item-end>
           <ion-icon name="trash"></ion-icon>

@@ -25,9 +25,13 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase) {
     this.getCoins();
+
+    /** FIREBASE FUN
     this.items$ = afDB.list('/');
     this.items$.subscribe(item => console.log(item));
     console.log(this.items$);
+    */
+
   }
     getCoins(){
       this.dataService.getCoins()
@@ -54,7 +58,7 @@ export class HomePage {
       if(haveCoin == false){
         this.myCoins.push(this.searchedCoin);
         this.showInfo.push(true);
-        this.myAmount.push('0');
+        this.myAmount.push(null);
         this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
           .subscribe((coinMarketCap) => {
             this.myCoinsMarketCap.push(coinMarketCap)
@@ -108,13 +112,11 @@ export class HomePage {
         )
       }
     }
-    myPortfolioValues(i:number,){
-      this.myAmount.splice(i, 1, this.enteredAmount[i]);
-    }
     removeCoin(i:number){
-      this.myCoins.splice(i,1);
-      this.myCoinsMarketCap.splice(i,1);
+      this.myCoins.splice(i, 1);
+      this.myCoinsMarketCap.splice(i, 1);
       this.myCoinsPrice.splice(i, 1);
+      this.myAmount.splice(i, 1);
     }
 
 }
