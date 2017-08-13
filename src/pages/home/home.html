@@ -52,7 +52,7 @@
       <ion-item>
         <ion-input type="text" [(ngModel)]="enteredAmount[i]"
         placeholder="Enter {{allCoins[coin]?.Name}}"></ion-input>
-        <button color="danger" ion-button item-end>
+        <button (click)="removeCoin(i)" color="danger" ion-button item-end>
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item>

@@ -93,5 +93,9 @@ export class HomePage {
     myPortfolioValues(i:number,){
       this.myAmount.splice(i, 1, this.enteredAmount[i]);
     }
+    removeCoin(i:number){
+      this.myCoins.splice(i,1);
+      console.log(this.myCoins);
+    }
 
 }
