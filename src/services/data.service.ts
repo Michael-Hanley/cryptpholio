@@ -3,11 +3,13 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class DataService {
   private coinList = 'https://www.cryptocompare.com/api/data/coinlist/';
-  private coinPrice= 'https://min-api.cryptocompare.com/data/price?fsym='
+  private coinPrice= 'https://min-api.cryptocompare.com/data/price?fsym=';
+  private marketCap = 'https://coinmarketcap-nexuist.rhcloud.com/api/';
   constructor( private http: Http ) { }
   getCoins(): Observable<any> {
     return this.http.get(this.coinList)
@@ -18,10 +20,17 @@ export class DataService {
     let returnTypes = '&tsyms=BTC,USD,EUR,ETH';
     let queryString = this.coinPrice+coin+returnTypes;
     return this.http.get(queryString)
-      .map(this.extractPrice)
+      .map(this.extractJsonData)
       .catch(this.handleError)
   }
-  private extractPrice(res:Response) {
+  getCoinMarketCap(coin:string): Observable<any> {
+    console.log(coin);
+    let queryString = this.marketCap+coin+"/market_cap";
+    return this.http.get(queryString)
+      .map(this.extractJsonData)
+      .catch(this.handleError)
+  }
+  private extractJsonData(res:Response) {
     let body = res.json();
     return body || { };
   }

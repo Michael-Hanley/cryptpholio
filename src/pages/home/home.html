@@ -21,42 +21,38 @@
       </ion-item>
     </ion-list>
 
-  <ion-card *ngFor="let coin of coins ; let i = index">
-    <ion-item>
-       <span item-left>{{ searchedCoin }}</span>
-       <span item-right>{{ coin?.USD }}</span>
+  <ion-card *ngFor="let coin of myCoins ; let i = index">
+    <ion-item (click)="showInfoToggle(i)">
+      <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[coin]?.ImageUrl}}"></span>
+      <span item-left>{{ allCoins[coin]?.CoinName }}</span>
+      <span item-right>{{ myCoinsPrice[i]?.USD }}</span>
     </ion-item>
-    <ion-item>
-      <ion-icon name="football" item-start large></ion-icon>
-
-<!--
-      Instead of football, coin image.
-
-      -->
-      <h2>Market Cap</h2>
-      <p>250,000,000</p>
-    </ion-item>
-    <ion-item>
-      <span item-left>
-        <h2>Value</h2>
-        <p>USD</p> <!--- make this a changeable option in profile -->
-        <p>BTC</p>
-        <p>ETH</p>
-      </span>
-      <span item-right>
-        <h2>Portfolio Value</h2>
-        <p>USD</p> <!--- make this a changeable option in profile -->
-        <p>BTC</p>
-        <p>ETH</p>
-      </span>
-    </ion-item>
-    <ion-item>
-      <span item-left>My ((Coin name)):</span>
-      <ion-input type="text"></ion-input>
-      <button ion-button icon-left item-end>
-        Update
-      </button>
-    </ion-item>
-
+    <div *ngIf="showInfo[i] == true">
+      <ion-item>
+        <h2>Market Cap</h2>
+        <p>{{ myCoinsMarketCap[i]?.usd }}</p>
+      </ion-item>
+      <ion-item>
+        <span item-left>
+          <h2>Value</h2>
+          <p>USD {{ myCoinsPrice[i]?.USD }}</p> <!--- make this a changeable option in profile -->
+          <p>BTC {{ myCoinsPrice[i]?.BTC }}</p>
+          <p>ETH {{ myCoinsPrice[i]?.ETH }}</p>
+        </span>
+        <span item-right>
+          <h2>Portfolio Value</h2>
+          <p>USD</p> <!--- make this a changeable option in profile -->
+          <p>BTC</p>
+          <p>ETH</p>
+        </span>
+      </ion-item>
+      <ion-item>
+        <span item-left>My {{allCoins[coin]?.Name}}:</span>
+        <ion-input type="text" [(ngModel)]="enteredAmount[i]"></ion-input>
+        <button ion-button icon-left item-end (click)="myPortfolioValues(i)">
+          Update
+        </button>
+      </ion-item>
+    </div>
   </ion-card>
 </ion-content>

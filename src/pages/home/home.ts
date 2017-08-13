@@ -13,6 +13,11 @@ export class HomePage {
   searchedCoin: string = '';
   allCoins:Array<any> = [];
   myCoins:Array<any> = [];
+  myCoinsPrice: Array<any> = [];
+  showInfo: Array<Boolean> = [];
+  myCoinsMarketCap:Array<any> = [];
+  myAmount:Array<any> = [];
+  enteredAmount:Array<any> = [];
   constructor(public navCtrl: NavController, private dataService:DataService) {
     this.getCoins();
   }
@@ -53,7 +58,31 @@ export class HomePage {
       });
       if(haveCoin == false){
         this.myCoins.push(this.searchedCoin);
+        this.showInfo.push(true);
+        this.myAmount.push('0');
+        this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
+          .subscribe((coinMarketCap) => {
+            this.myCoinsMarketCap.push(coinMarketCap)
+          })
+        this.dataService.getCoinPrice(this.searchedCoin)
+          .subscribe((coinsPrice) =>{
+            this.myCoinsPrice.push(coinsPrice);
+          })
+
       }
+    }
+    showInfoToggle(i:number){
+      if(this.showInfo[i] == false){
+        this.showInfo[i] = true;
+      }
+      else{
+        this.showInfo[i] = false;
+      }
+    }
+    myPortfolioValues(i:number,){
+      //myAmount[i].USD = this.myCoinsPrice[i].USD *
+      this.myAmount.splice(i, 1, this.enteredAmount[i]);
+      console.log(this.myAmount);
     }
 
 }
