@@ -16,7 +16,7 @@
     <ion-list *ngFor="let coin of coins">
       <ion-item *ngIf="allCoins[searchedCoin]?.CoinName != null">
           <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[searchedCoin]?.ImageUrl}}"></span>
-          <span item-left>{{ allCoins[searchedCoin]?.Name }}</span>
+          <span item-left><p>{{ allCoins[searchedCoin]?.Name }}</p></span>
           <span item-right>USD {{ coin?.USD }}</span>
           <button (click)="addCoin()" ion-button item-right>
             <ion-icon name="add"></ion-icon>

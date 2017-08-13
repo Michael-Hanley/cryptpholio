@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from './../../services/data.service';
 
+
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,9 +21,13 @@ export class HomePage {
   myCoinsMarketCap:Array<any> = [];
   myAmount:Array<any> = [];
   enteredAmount:Array<any> = [];
+  items$: FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, private dataService:DataService) {
+  constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase) {
     this.getCoins();
+    this.items$ = afDB.list('/');
+    this.items$.subscribe(item => console.log(item));
+    console.log(this.items$);
   }
     getCoins(){
       this.dataService.getCoins()
@@ -106,6 +113,8 @@ export class HomePage {
     }
     removeCoin(i:number){
       this.myCoins.splice(i,1);
+      this.myCoinsMarketCap.splice(i,1);
+      this.myCoinsPrice.splice(i, 1);
     }
 
 }
