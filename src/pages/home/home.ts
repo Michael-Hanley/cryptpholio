@@ -68,11 +68,8 @@ export class HomePage {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
-    console.log(this.myCoinsMarketCap)
-    console.log(this.myCoinsPrice)
     }
     refresher(i:number, coin:string){
-      console.log(i);
       this.dataService.getCoinMarketCap(this.allCoins[coin].Name.toLowerCase())
       .subscribe((coinMarketCap) => {
         this.myCoinsMarketCap.splice(i, 1, coinMarketCap)
@@ -90,12 +87,25 @@ export class HomePage {
         this.showInfo[i] = false;
       }
     }
+    minimizeAll(){
+      let i:number = 0;
+      if(this.showInfo[0] == false && this.showInfo[1] == false)
+        {
+          this.showInfo.forEach(element =>
+            this.showInfo.splice(i++, 1, true),
+          )
+        }
+      else{
+        this.showInfo.forEach(element =>
+          this.showInfo.splice(i++, 1, false),
+        )
+      }
+    }
     myPortfolioValues(i:number,){
       this.myAmount.splice(i, 1, this.enteredAmount[i]);
     }
     removeCoin(i:number){
       this.myCoins.splice(i,1);
-      console.log(this.myCoins);
     }
 
 }

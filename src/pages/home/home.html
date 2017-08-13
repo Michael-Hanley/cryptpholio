@@ -25,7 +25,8 @@
     </ion-list>
 
   <ion-card *ngFor="let coin of myCoins ; let i = index">
-    <ion-item (click)="showInfoToggle(i)">
+    <ion-item (dblclick)="minimizeAll()"
+    (click)="showInfoToggle(i)">
       <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[coin]?.ImageUrl}}"></span>
       <span item-left>{{ allCoins[coin]?.CoinName }}</span>
       <span item-right>{{ myCoinsPrice[i]?.USD }}</span>
