@@ -18,6 +18,7 @@ export class HomePage {
   myCoinsMarketCap:Array<any> = [];
   myAmount:Array<any> = [];
   enteredAmount:Array<any> = [];
+
   constructor(public navCtrl: NavController, private dataService:DataService) {
     this.getCoins();
   }
@@ -70,6 +71,29 @@ export class HomePage {
           })
 
       }
+
+    }
+    updateCoins(refresher){
+      let i = 0;
+      this.myCoins.forEach(element =>
+        this.refresher(i++, element)
+      )
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+    console.log(this.myCoinsMarketCap)
+    console.log(this.myCoinsPrice)
+    }
+    refresher(i:number, coin:string){
+      console.log(i);
+      this.dataService.getCoinMarketCap(this.allCoins[coin].Name.toLowerCase())
+      .subscribe((coinMarketCap) => {
+        this.myCoinsMarketCap.splice(i, 1, coinMarketCap)
+      })
+      this.dataService.getCoinPrice(coin)
+        .subscribe((coinsPrice) =>{
+        this.myCoinsPrice.splice(i,1, coinsPrice);
+      })
     }
     showInfoToggle(i:number){
       if(this.showInfo[i] == false){
@@ -82,7 +106,6 @@ export class HomePage {
     myPortfolioValues(i:number,){
       //myAmount[i].USD = this.myCoinsPrice[i].USD *
       this.myAmount.splice(i, 1, this.enteredAmount[i]);
-      console.log(this.myAmount);
     }
 
 }

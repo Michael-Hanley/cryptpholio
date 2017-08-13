@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-refresher (ionRefresh)="updateCoins($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-list *ngFor="let coin of coins">
       <ion-item *ngIf="allCoins[searchedCoin]?.CoinName != null">
           <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[searchedCoin]?.ImageUrl}}"></span>
@@ -30,7 +33,7 @@
     <div *ngIf="showInfo[i] == true">
       <ion-item>
         <h2>Market Cap</h2>
-        <p>{{ myCoinsMarketCap[i]?.usd }}</p>
+        <p>{{ myCoinsMarketCap[i]?.usd | currency:'USD':true }}</p>
       </ion-item>
       <ion-item>
         <span item-left>
@@ -41,9 +44,9 @@
         </span>
         <span item-right>
           <h2>Portfolio Value</h2>
-          <p>USD</p> <!--- make this a changeable option in profile -->
-          <p>BTC</p>
-          <p>ETH</p>
+          <p>USD {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.USD }}</p> <!--- make this a changeable option in profile -->
+          <p>BTC {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.BTC }}</p>
+          <p>ETH {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.ETH }}</p>
         </span>
       </ion-item>
       <ion-item>

@@ -7,13 +7,13 @@ import { DataService } from './../services/data.service';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { keyValueFilterPipe } from '../pipes/keyValueFilterPipe.pipe';
+import { stackValuePipe } from '../pipes/stackValuePipe.pipe';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    keyValueFilterPipe
+    stackValuePipe
   ],
   imports: [
     BrowserModule,
