@@ -6,12 +6,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { DataService } from './../services/data.service';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { stackValuePipe } from '../pipes/stackValuePipe.pipe';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Facebook } from '@ionic-native/facebook';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAvPyiIZ04PeEjVv1XjnU7Q-jge3XmRvcg",
@@ -26,6 +28,7 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
+    LoginPage,
     stackValuePipe
   ],
   imports: [
@@ -40,13 +43,15 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage
   ],
   providers: [
     DataService,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Facebook
   ]
 })
 export class AppModule {}

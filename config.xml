@@ -84,4 +84,8 @@
     <plugin name="cordova-plugin-device" spec="1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <engine name="android" spec="~6.1.2" />
+    <plugin name="cordova-plugin-facebook4" spec="~1.9.1">
+        <variable name="APP_ID" value="158867241330093" />
+        <variable name="APP_NAME" value="Cryptpholio" />
+    </plugin>
 </widget>

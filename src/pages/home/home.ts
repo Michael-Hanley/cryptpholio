@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from './../../services/data.service';
 
@@ -9,7 +9,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
   coins:Array<any> = [];
   coinPrices: Array<any> = [];
   errorMessage: string;
@@ -24,7 +24,7 @@ export class HomePage {
   items$: FirebaseListObservable<any[]>;
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase) {
-    this.getCoins();
+
 
     /** FIREBASE FUN
     this.items$ = afDB.list('/');
@@ -40,11 +40,12 @@ export class HomePage {
         });
       }
     getCoinPrice(){
-      this.dataService.getCoinPrice(
-        this.searchedCoin = this.searchedCoin.toUpperCase())
+      this.searchedCoin = this.searchedCoin.toUpperCase();
+      this.dataService.getCoinPrice(this.searchedCoin)
         .subscribe((coinsPrice) => {
             this.coins = [];
             this.coins.push(coinsPrice);
+            console.log(this.coins);
       })
     }
 
@@ -117,6 +118,9 @@ export class HomePage {
       this.myCoinsMarketCap.splice(i, 1);
       this.myCoinsPrice.splice(i, 1);
       this.myAmount.splice(i, 1);
+    }
+    ngOnInit(){
+      this.getCoins();
     }
 
 }

@@ -10,19 +10,19 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-refresher (ionRefresh)="updateCoins($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <ion-list *ngFor="let coin of coins">
-      <ion-item *ngIf="allCoins[searchedCoin]?.CoinName != null">
-          <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[searchedCoin]?.ImageUrl}}"></span>
-          <span item-left><p>{{ allCoins[searchedCoin]?.Name }}</p></span>
-          <span item-right>USD {{ coin?.USD }}</span>
-          <button (click)="addCoin()" ion-button item-right>
-            <ion-icon name="add"></ion-icon>
-          </button>
-      </ion-item>
-    </ion-list>
+  <ion-refresher (ionRefresh)="updateCoins($event)">
+      <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngFor="let coin of coins">
+    <ion-item *ngIf="allCoins[searchedCoin]?.CoinName != null">
+        <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[searchedCoin]?.ImageUrl}}"></span>
+        <span item-left><p>{{ allCoins[searchedCoin]?.Name }}</p></span>
+        <span item-right>USD {{ coin?.USD }}</span>
+        <button (click)="addCoin()" ion-button item-right>
+          <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-item>
+  </ion-list>
 
   <ion-card *ngFor="let coin of myCoins ; let i = index">
     <ion-item (dblclick)="minimizeAll()"
