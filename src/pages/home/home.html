@@ -45,9 +45,9 @@
         </span>
         <span item-right>
           <h2>Portfolio Value</h2>
-          <p>USD {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.USD }}</p> <!--- make this a changeable option in profile -->
-          <p>BTC {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.BTC }}</p>
-          <p>ETH {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.ETH }}</p>
+          <p>USD {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.USD | number : '1.2-5'}}</p> <!--- make this a changeable option in profile -->
+          <p>BTC {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.BTC | number : '1.2-5'}}</p>
+          <p>ETH {{ enteredAmount[i] | stackValue: myCoinsPrice[i]?.ETH | number : '1.2-5'}}</p>
         </span>
       </ion-item>
       <ion-item>
