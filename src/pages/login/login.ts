@@ -50,6 +50,10 @@ export class LoginPage {
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then(res => this.navCtrl.setRoot(HomePage));
   }
+  signInWithGoogle() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then(res => this.navCtrl.setRoot(HomePage));
+  }
 
   skip(){
     this.navCtrl.setRoot(HomePage)
