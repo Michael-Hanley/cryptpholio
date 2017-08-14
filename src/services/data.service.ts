@@ -24,7 +24,6 @@ export class DataService {
       .catch(this.handleError)
   }
   getCoinMarketCap(coin:string): Observable<any> {
-    console.log(coin);
     let queryString = this.marketCap+coin+"/market_cap";
     return this.http.get(queryString)
       .map(this.extractJsonData)

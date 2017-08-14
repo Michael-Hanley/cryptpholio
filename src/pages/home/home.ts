@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from './../../services/data.service';
 
+import { Storage } from '@ionic/storage';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
@@ -21,11 +22,10 @@ export class HomePage implements OnInit {
   myCoinsMarketCap:Array<any> = [];
   myAmount:Array<any> = [];
   enteredAmount:Array<any> = [];
-  items$: FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase) {
-
-
+  constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
+    private storage: Storage) {
+      
     /** FIREBASE FUN
     this.items$ = afDB.list('/');
     this.items$.subscribe(item => console.log(item));
@@ -37,6 +37,7 @@ export class HomePage implements OnInit {
       this.dataService.getCoins()
         .subscribe((coinInfo) => {
           this.allCoins = coinInfo;
+          this.startApp();
         });
       }
     getCoinPrice(){
@@ -45,7 +46,6 @@ export class HomePage implements OnInit {
         .subscribe((coinsPrice) => {
             this.coins = [];
             this.coins.push(coinsPrice);
-            console.log(this.coins);
       })
     }
 
@@ -60,6 +60,8 @@ export class HomePage implements OnInit {
         this.myCoins.push(this.searchedCoin);
         this.showInfo.push(true);
         this.myAmount.push(null);
+        this.storage.set(this.searchedCoin, null);      
+        this.storage.keys().then(res => console.log(res));  
         this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
           .subscribe((coinMarketCap) => {
             this.myCoinsMarketCap.push(coinMarketCap)
@@ -114,13 +116,33 @@ export class HomePage implements OnInit {
       }
     }
     removeCoin(i:number){
+      this.storage.remove(this.myCoins[i]);
       this.myCoins.splice(i, 1);
       this.myCoinsMarketCap.splice(i, 1);
       this.myCoinsPrice.splice(i, 1);
       this.myAmount.splice(i, 1);
+      this.storage.keys().then(res => console.log(res));  
+    }
+    startApp(){
+      this.storage.keys().then(element => {
+        element.forEach(item => {
+          this.myCoins.push(item);
+          this.showInfo.push(true);
+          this.myAmount.push(null);
+          this.dataService.getCoinMarketCap(this.allCoins[item].Name.toLowerCase())
+            .subscribe((coinMarketCap) => {
+              this.myCoinsMarketCap.push(coinMarketCap)
+            })
+          this.dataService.getCoinPrice(item)
+            .subscribe((coinsPrice) =>{
+              this.myCoinsPrice.push(coinsPrice);
+            })})
+      })
+    }
+    updateCoinAmount(){
+      console.log(this.myAmount);
     }
     ngOnInit(){
       this.getCoins();
     }
-
 }

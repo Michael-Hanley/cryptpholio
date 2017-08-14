@@ -15,6 +15,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Facebook } from '@ionic-native/facebook';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 export const firebaseConfig = {
   apiKey: "AIzaSyAvPyiIZ04PeEjVv1XjnU7Q-jge3XmRvcg",
   authDomain: "cryptpholio-97a78.firebaseapp.com",
@@ -38,7 +40,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
