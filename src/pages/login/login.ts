@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 
-
+import { HomePage } from '../home/home';
 import { Platform } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 
+
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -21,9 +23,10 @@ import * as firebase from 'firebase/app';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth,
     private fb: Facebook, private platform: Platform) { }
-
+/*
   signInWithFacebook() {
     if (this.platform.is('cordova')) {
       return this.fb.login(['email', 'public_profile']).then(res => {
@@ -32,15 +35,27 @@ export class LoginPage {
         return firebase.auth().signInWithCredential(facebookCredential);
       })
     }
-   /** else {
+    else {
       return this.afAuth.auth
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(res => this.navCtrl.setRoot(HomePage))
-    }*/
+        .then(res => {
+          this.navCtrl.setRoot(HomePage)
+          console.log(res);
+        })
+    }
+  }
+*/
+  signInWithFacebook() {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then(res => this.navCtrl.setRoot(HomePage));
   }
 
+  skip(){
+    this.navCtrl.setRoot(HomePage)
+  }
   signOut() {
-    this.afAuth.auth.signOut();
+//    this.afAuth.auth.signOut();
   }
 
 }
