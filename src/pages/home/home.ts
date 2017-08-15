@@ -22,10 +22,12 @@ export class HomePage implements OnInit {
   myCoinsMarketCap:Array<any> = [];
   myAmount:Array<any> = [];
   enteredAmount:Array<any> = [];
+  //portfolioValue: number;
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
-      
+ //     this.storage.clear();
+
     /** FIREBASE FUN
     this.items$ = afDB.list('/');
     this.items$.subscribe(item => console.log(item));
@@ -62,6 +64,7 @@ export class HomePage implements OnInit {
         this.myAmount.push(null);
         this.storage.set(this.searchedCoin, null);      
         this.storage.keys().then(res => console.log(res));  
+        this.storage.get(this.searchedCoin).then(res => console.log(res));
         this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
           .subscribe((coinMarketCap) => {
             this.myCoinsMarketCap.push(coinMarketCap)
@@ -126,9 +129,11 @@ export class HomePage implements OnInit {
     startApp(){
       this.storage.keys().then(element => {
         element.forEach(item => {
-          this.myCoins.push(item);
-          this.showInfo.push(true);
-          this.myAmount.push(null);
+          console.log(element)
+          this.storage.get(item).then(res => {
+          this.myAmount.push(res)
+          this.myCoins.push(item)
+          this.showInfo.push(true)
           this.dataService.getCoinMarketCap(this.allCoins[item].Name.toLowerCase())
             .subscribe((coinMarketCap) => {
               this.myCoinsMarketCap.push(coinMarketCap)
@@ -136,12 +141,21 @@ export class HomePage implements OnInit {
           this.dataService.getCoinPrice(item)
             .subscribe((coinsPrice) =>{
               this.myCoinsPrice.push(coinsPrice);
-            })})
-      })
+            })})}
+      )})
     }
-    updateCoinAmount(){
-      console.log(this.myAmount);
+    updateCoinAmount(event:any, i:number){
+      setTimeout(() => { 
+        this.storage.set(this.myCoins[i], this.myAmount[i]);
+      this.addCoins()}, 1000);
+
     }
+    /**
+    addCoins(){
+      this.portfolioValue = this.myAmount.reduce((a,b) => a + b);
+      console.log(this.portfolioValue);
+    }
+    **/
     ngOnInit(){
       this.getCoins();
     }

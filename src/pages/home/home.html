@@ -28,7 +28,7 @@
     <ion-item (dblclick)="minimizeAll()"
     (click)="showInfoToggle(i)">
       <span item-left><img class="logo" md-card-image src="https://www.cryptocompare.com{{allCoins[coin]?.ImageUrl}}"></span>
-      <span item-left>{{ allCoins[myCoins]?.CoinName }}</span>
+      <span item-left>{{ allCoins[myCoins[i]].CoinName }}</span>
       <span item-right>{{ myCoinsPrice[i]?.USD }}</span>
     </ion-item>
     <div *ngIf="showInfo[i] == true">
@@ -53,7 +53,7 @@
       <ion-item>
         <ion-input type="text" [(ngModel)]="myAmount[i]"
         placeholder="Enter {{allCoins[coin]?.Name}}"
-        (ionInput)="updateCoinAmount($event)"></ion-input>
+        (input)="updateCoinAmount($event, i)"></ion-input>
         <button (click)="removeCoin(i)" color="danger" ion-button item-end>
           <ion-icon name="trash"></ion-icon>
         </button>
