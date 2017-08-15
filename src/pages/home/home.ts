@@ -146,8 +146,7 @@ export class HomePage implements OnInit {
     }
     updateCoinAmount(event:any, i:number){
       setTimeout(() => { 
-        this.storage.set(this.myCoins[i], this.myAmount[i]);
-      this.addCoins()}, 1000);
+        this.storage.set(this.myCoins[i], this.myAmount[i]);}, 1000);
 
     }
     /**
