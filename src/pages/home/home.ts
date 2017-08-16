@@ -56,6 +56,7 @@ export class HomePage implements OnInit {
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
  //     this.storage.clear();
+        this.dataService.getCoinHistMin('BTC');
 
     /** FIREBASE FUN
     this.items$ = afDB.list('/');
@@ -186,5 +187,6 @@ export class HomePage implements OnInit {
     **/
     ngOnInit(){
       this.getCoins();
+      this.dataService.getCoinHistMin('ETH').subscribe(res => console.log(res))
     }
 }

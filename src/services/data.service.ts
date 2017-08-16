@@ -10,6 +10,7 @@ export class DataService {
   private coinList = 'https://www.cryptocompare.com/api/data/coinlist/';
   private coinPrice= 'https://min-api.cryptocompare.com/data/price?fsym=';
   private marketCap = 'https://coinmarketcap-nexuist.rhcloud.com/api/';
+  private coinHistMin = 'https://min-api.cryptocompare.com/data/histominute?fsym=';
   constructor( private http: Http ) { }
   getCoins(): Observable<any> {
     return this.http.get(this.coinList)
@@ -19,6 +20,13 @@ export class DataService {
   getCoinPrice(coin:string): Observable<any> {
     let returnTypes = '&tsyms=BTC,USD,EUR,ETH';
     let queryString = this.coinPrice+coin+returnTypes;
+    return this.http.get(queryString)
+      .map(this.extractJsonData)
+      .catch(this.handleError)
+  }
+  getCoinHistMin(coin:string): Observable<any> {
+  let params = '&tsym=USD&limit=60&aggregate=3&e=Kraken&extraParams=your_app_name';
+  let queryString = this.coinHistMin+coin+params;
     return this.http.get(queryString)
       .map(this.extractJsonData)
       .catch(this.handleError)
