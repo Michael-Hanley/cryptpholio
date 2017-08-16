@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { stackValuePipe } from '../pipes/stackValuePipe.pipe';
-
+import { ChartsModule } from 'ng2-charts';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -37,6 +37,7 @@ export const firebaseConfig = {
     BrowserModule,
     HttpModule,
     JsonpModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,

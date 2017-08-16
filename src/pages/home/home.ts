@@ -24,6 +24,35 @@ export class HomePage implements OnInit {
   enteredAmount:Array<any> = [];
   //portfolioValue: number;
 
+
+  public lineChartData:Array<any> = [
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'}
+  ];
+  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartOptions:any = {
+    responsive: true
+  };
+  public lineChartColors:Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }
+  ];
+  public lineChartLegend:boolean = true;
+  public lineChartType:string = 'line';
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+  public chartHovered(e:any):void {
+    console.log(e);
+  };
+
+
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
  //     this.storage.clear();
@@ -62,8 +91,8 @@ export class HomePage implements OnInit {
         this.myCoins.push(this.searchedCoin);
         this.showInfo.push(true);
         this.myAmount.push(null);
-        this.storage.set(this.searchedCoin, null);      
-        this.storage.keys().then(res => console.log(res));  
+        this.storage.set(this.searchedCoin, null);
+        this.storage.keys().then(res => console.log(res));
         this.storage.get(this.searchedCoin).then(res => console.log(res));
         this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
           .subscribe((coinMarketCap) => {
@@ -124,7 +153,7 @@ export class HomePage implements OnInit {
       this.myCoinsMarketCap.splice(i, 1);
       this.myCoinsPrice.splice(i, 1);
       this.myAmount.splice(i, 1);
-      this.storage.keys().then(res => console.log(res));  
+      this.storage.keys().then(res => console.log(res));
     }
     startApp(){
       this.storage.keys().then(element => {
@@ -145,7 +174,7 @@ export class HomePage implements OnInit {
       )})
     }
     updateCoinAmount(event:any, i:number){
-      setTimeout(() => { 
+      setTimeout(() => {
         this.storage.set(this.myCoins[i], this.myAmount[i]);}, 1000);
 
     }
