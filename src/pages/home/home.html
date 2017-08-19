@@ -32,9 +32,10 @@
       <span item-right>{{ myCoinsPrice[i]?.USD }}</span>
     </ion-item>
     <div *ngIf="showInfo[i] == true">
-      <ion-item>
-        <chart [values]="this.coinValueChart[i]"></chart>
-      </ion-item>
+      <chart 
+      [values]="coinValueChart[i]"
+      [times]="coinTime[i]"
+      ></chart>
       <ion-item>
         <h2>Market Cap</h2>
         <p>{{ myCoinsMarketCap[i]?.usd | currency:'USD':true }}</p>
