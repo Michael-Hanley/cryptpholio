@@ -26,7 +26,6 @@ export class ChartComponent implements OnInit {
   }
   @Input()
   set times(times:Array<any>){
-    let realTime:any;
     let date:any;
     let hours:any;
     let minutes: any;
