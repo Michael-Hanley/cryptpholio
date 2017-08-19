@@ -1,5 +1,5 @@
 <!-- Generated template for the ChartComponent component -->
-<div>  
+<div *ngIf="dataAvail == true">  
   <canvas 
     baseChart width="400" height="400"
     [datasets]="lineChartData"

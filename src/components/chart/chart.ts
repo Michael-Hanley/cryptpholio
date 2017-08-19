@@ -14,14 +14,32 @@ export class ChartComponent implements OnInit {
   @Input()
   set values(values:Array<any>){
     this.lineChartData.push(values);
-    console.log(this.lineChartData);
     this.dataAvail = true;
+    this.lineChartData.forEach(object => {
+      if (object.data.length < 2){
+        this.dataAvail = false;
+        console.log(this.lineChartData);
+      }})
+    
   }
   @Input()
   set times(times:Array<any>){
     let realTime:any;
-    times.forEach(time => this.lineChartLabels.push(time)
-    );
+    let date:any;
+    let hours:any;
+    let minutes: any;
+    let seconds: any;
+    let formattedTime:any
+    times.forEach(time => {
+      date = new Date(time*1000)
+      hours = date.getHours();
+      minutes = "0" + date.getMinutes();
+      seconds = "0" + date.getSeconds();
+      formattedTime = hours+ ':' + minutes.substr(-2);
+      this.lineChartLabels.push(formattedTime);
+        }
+      )
+      //this.lineChartLabels.push(time)
   }
   dataAvail:boolean = false;
   public lineChartOptions:any = {
@@ -39,7 +57,7 @@ export class ChartComponent implements OnInit {
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     }
   ];
-  public lineChartLegend:boolean = false;
+  public lineChartLegend:boolean = true;
   public lineChartType:string = 'line';
 
   onChartClick(event) {

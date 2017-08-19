@@ -97,6 +97,8 @@ export class HomePage implements OnInit, AfterViewInit {
     }, 1000);
     }
     refresher(i:number, coin:string){
+      let coinValue: Array <any> = [];
+      let coinTimeMin: Array<any> = [];
       this.dataService.getCoinMarketCap(this.allCoins[coin].Name.toLowerCase())
       .subscribe((coinMarketCap) => {
         this.myCoinsMarketCap.splice(i, 1, coinMarketCap)
@@ -105,6 +107,15 @@ export class HomePage implements OnInit, AfterViewInit {
         .subscribe((coinsPrice) =>{
         this.myCoinsPrice.splice(i,1, coinsPrice);
       })
+      this.dataService.getCoinHistMin(this.searchedCoin)
+      .subscribe(res => {res.forEach(
+        element => {coinValue.push(element.close),
+        coinTimeMin.push(element.time)
+      })
+    this.coinTime.push(coinTimeMin);
+    this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name});
+    this.showInfo.push(true);
+  })
     }
     showInfoToggle(i:number){
       if(this.showInfo[i] == false){
