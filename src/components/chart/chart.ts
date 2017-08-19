@@ -13,16 +13,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ChartComponent implements OnInit {
   @Input()
   set values(values:Array<any>){
+    this.lineChartData = [];
     this.lineChartData.push(values);
     this.dataAvail = true;
     this.lineChartData.forEach(object => {
       if (object.data.length < 2){
         this.dataAvail = false;
-        console.log(this.lineChartData);
       }
     }
   )
-    
+
   }
   @Input()
   set times(times:Array<any>){
@@ -31,7 +31,8 @@ export class ChartComponent implements OnInit {
     let hours:any;
     let minutes: any;
     let seconds: any;
-    let formattedTime:any
+    let formattedTime:any = [];
+    this.lineChartLabels = [];
     times.forEach(time => {
       date = new Date(time*1000)
       hours = date.getHours();
@@ -41,7 +42,6 @@ export class ChartComponent implements OnInit {
       this.lineChartLabels.push(formattedTime);
         }
       )
-      //this.lineChartLabels.push(time)
   }
   dataAvail:boolean = false;
   public lineChartOptions:any = {
@@ -70,7 +70,7 @@ export class ChartComponent implements OnInit {
 
 
   ngOnInit(){
-    
+
   }
 
 

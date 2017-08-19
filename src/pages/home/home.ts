@@ -1,4 +1,3 @@
-import { ChartComponent } from './../../components/chart/chart';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from './../../services/data.service';
@@ -26,7 +25,7 @@ export class HomePage implements OnInit, AfterViewInit {
   coinValueChart:Array<any>=[];
   coinTime:Array<any>=[];
   dataReady:boolean=false;
-  chartData:Array<boolean> = []; 
+  chartData:Array<boolean> = [];
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
@@ -56,7 +55,7 @@ export class HomePage implements OnInit, AfterViewInit {
     }
 
     addCoin(){
-      let coinValue: Array <any> = [];      
+      let coinValue: Array <any> = [];
       let haveCoin: boolean = false;
       let coinTimeMin: Array<any> = [];
       this.myCoins.forEach(element => {
@@ -85,10 +84,10 @@ export class HomePage implements OnInit, AfterViewInit {
           this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name});
           this.showInfo.push(true);
           if(res.length == null){
-            this.chartData.push(false); 
+            this.chartData.push(false);
            }
            else {
-            this.chartData.push(true); 
+            this.chartData.push(true);
            }
         })
       }
@@ -103,31 +102,31 @@ export class HomePage implements OnInit, AfterViewInit {
     }, 1000);
     }
     refresher(i:number, coin:string){
-      let coinValue: Array <any> = [];
+      let coinValue: Array<any> = [];
       let coinTimeMin: Array<any> = [];
       this.dataService.getCoinMarketCap(this.allCoins[coin].Name.toLowerCase())
-      .subscribe((coinMarketCap) => {
-        this.myCoinsMarketCap.splice(i, 1, coinMarketCap)
+        .subscribe((coinMarketCap) => {
+          this.myCoinsMarketCap.splice(i, 1, coinMarketCap)
       })
       this.dataService.getCoinPrice(coin)
         .subscribe((coinsPrice) =>{
-        this.myCoinsPrice.splice(i,1, coinsPrice);
+          this.myCoinsPrice.splice(i, 1, coinsPrice);
       })
-      this.dataService.getCoinHistMin(this.searchedCoin)
-      .subscribe(res => {res.forEach(
-        element => {coinValue.push(element.close),
-        coinTimeMin.splice(element.time)
+      this.dataService.getCoinHistMin(coin)
+        .subscribe(res => {res.forEach(
+          element => {coinValue.push(element.close),
+          coinTimeMin.push(element.time)
+        })
+        this.coinTime.splice(i, 1, coinTimeMin);
+        this.coinValueChart.splice(i, 1, {data: coinValue, label: this.allCoins[coin].Name});
+        this.showInfo.splice(i, 1, true);
+        if(res.length == null){
+          this.chartData.splice(i, 1, false);
+        }
+        else {
+          this.chartData.splice(i, 1, true);
+        }
       })
-    this.coinTime.splice(i, 1, coinTimeMin);
-    this.coinValueChart.splice(i, 1, {data: coinValue, label: this.allCoins[this.searchedCoin].Name});
-    this.showInfo.splice(i,1, true);
-    if(res.length == null){
-      this.chartData.splice(i, 1, false); 
-     }
-     else {
-      this.chartData.splice(i, 1, true); 
-     }
-  })
     }
     showInfoToggle(i:number){
       if(this.showInfo[i] == false){
@@ -159,12 +158,13 @@ export class HomePage implements OnInit, AfterViewInit {
       this.myAmount.splice(i, 1);
       this.coinValueChart.splice(i, 1);
       this.chartData.splice(i, 1);
+      this.coinTime.splice(i, 1);
     }
     startApp(){
-      let coinValue: Array<any> = [];
-      let coinTimeMin:Array<any> = [];
       this.storage.keys().then(element => {
         element.forEach(item => {
+          let coinValue: Array<any> = [];
+          let coinTimeMin:Array<any> = [];
           this.storage.get(item).then(res => {
           this.myAmount.push(res)
           this.myCoins.push(item)
@@ -178,26 +178,25 @@ export class HomePage implements OnInit, AfterViewInit {
             }
           )
           this.dataService.getCoinHistMin(item)
-            .subscribe(res => {res.forEach(
+            .subscribe(resData => {resData.forEach(
               element => {coinValue.push(element.close),
               coinTimeMin.push(element.time)
             })
-            console.log(res);            
             this.coinTime.push(coinTimeMin);
             this.coinValueChart.push({data: coinValue, label: this.allCoins[item].Name});
             this.showInfo.push(true);
-            if(res.length == null){
-              this.chartData.push(false); 
+            if(resData.length == null){
+              this.chartData.push(false);
              }
              else {
-              this.chartData.push(true); 
+              this.chartData.push(true);
              }
           })
         })}
       )})
     }
     getCoinHistMin(){
-      
+
     }
     updateCoinAmount(event:any, i:number){
       setTimeout(() => {
@@ -217,5 +216,5 @@ export class HomePage implements OnInit, AfterViewInit {
     ngAfterViewInit(){
       this.dataReady = true;
     }
-    
+
 }
