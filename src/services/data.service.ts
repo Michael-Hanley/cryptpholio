@@ -28,7 +28,7 @@ export class DataService {
   let params = '&tsym=USD&limit=60&aggregate=3&e=Kraken&extraParams=your_app_name';
   let queryString = this.coinHistMin+coin+params;
     return this.http.get(queryString)
-      .map(this.extractJsonData)
+      .map(this.extractData)
       .catch(this.handleError)
   }
   getCoinMarketCap(coin:string): Observable<any> {

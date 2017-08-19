@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChartComponent } from './../../components/chart/chart';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataService } from './../../services/data.service';
-
 import { Storage } from '@ionic/storage';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, AfterViewInit {
   coins:Array<any> = [];
   coinPrices: Array<any> = [];
   errorMessage: string;
@@ -23,40 +23,13 @@ export class HomePage implements OnInit {
   myAmount:Array<any> = [];
   enteredAmount:Array<any> = [];
   //portfolioValue: number;
-
-
-  public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'}
-  ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public lineChartOptions:any = {
-    responsive: true
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend:boolean = true;
-  public lineChartType:string = 'line';
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
-  public chartHovered(e:any):void {
-    console.log(e);
-  };
+  coinValueChart:Array<any>=[];
+  dataReady:boolean=false;
 
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
  //     this.storage.clear();
-        this.dataService.getCoinHistMin('BTC');
 
     /** FIREBASE FUN
     this.items$ = afDB.list('/');
@@ -82,6 +55,7 @@ export class HomePage implements OnInit {
     }
 
     addCoin(){
+      let coinValue: Array <any> = [];      
       let haveCoin: boolean = false;
       this.myCoins.forEach(element => {
         if (element == this.searchedCoin){
@@ -90,11 +64,8 @@ export class HomePage implements OnInit {
       });
       if(haveCoin == false){
         this.myCoins.push(this.searchedCoin);
-        this.showInfo.push(true);
         this.myAmount.push(null);
         this.storage.set(this.searchedCoin, null);
-        this.storage.keys().then(res => console.log(res));
-        this.storage.get(this.searchedCoin).then(res => console.log(res));
         this.dataService.getCoinMarketCap(this.allCoins[this.searchedCoin].Name.toLowerCase())
           .subscribe((coinMarketCap) => {
             this.myCoinsMarketCap.push(coinMarketCap)
@@ -103,9 +74,14 @@ export class HomePage implements OnInit {
           .subscribe((coinsPrice) =>{
             this.myCoinsPrice.push(coinsPrice);
           })
-
+        this.dataService.getCoinHistMin(this.searchedCoin)
+          .subscribe(res => {res.forEach(
+            element => coinValue.push(element.close),
+            this.showInfo.push(true),
+            this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name})
+            )
+          })
       }
-
     }
     updateCoins(refresher){
       let i = 0;
@@ -154,12 +130,12 @@ export class HomePage implements OnInit {
       this.myCoinsMarketCap.splice(i, 1);
       this.myCoinsPrice.splice(i, 1);
       this.myAmount.splice(i, 1);
-      this.storage.keys().then(res => console.log(res));
+      this.coinValueChart.splice(i, 1);
     }
     startApp(){
+      let coinValue: Array<any> = [];
       this.storage.keys().then(element => {
         element.forEach(item => {
-          console.log(element)
           this.storage.get(item).then(res => {
           this.myAmount.push(res)
           this.myCoins.push(item)
@@ -171,7 +147,16 @@ export class HomePage implements OnInit {
           this.dataService.getCoinPrice(item)
             .subscribe((coinsPrice) =>{
               this.myCoinsPrice.push(coinsPrice);
-            })})}
+            }
+          )
+          this.dataService.getCoinHistMin(this.searchedCoin)
+          .subscribe(res => {res.forEach(
+            element => coinValue.push(element.close),
+            this.showInfo.push(true),
+            this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name})
+            )
+          })
+          })}
       )})
     }
     updateCoinAmount(event:any, i:number){
@@ -187,6 +172,10 @@ export class HomePage implements OnInit {
     **/
     ngOnInit(){
       this.getCoins();
-      this.dataService.getCoinHistMin('ETH').subscribe(res => console.log(res))
     }
+
+    ngAfterViewInit(){
+      this.dataReady = true;
+    }
+    
 }

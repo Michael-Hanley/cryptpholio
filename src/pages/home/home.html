@@ -33,6 +33,9 @@
     </ion-item>
     <div *ngIf="showInfo[i] == true">
       <ion-item>
+        <chart [values]="this.coinValueChart[i]"></chart>
+      </ion-item>
+      <ion-item>
         <h2>Market Cap</h2>
         <p>{{ myCoinsMarketCap[i]?.usd | currency:'USD':true }}</p>
       </ion-item>
@@ -66,15 +69,6 @@
         Line Chart
       </ion-card-header>
       <ion-card-content>
-          <canvas baseChart width="400" height="400"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
       </ion-card-content>
     </ion-card>
 </ion-content>

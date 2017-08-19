@@ -1,3 +1,4 @@
+import { ChartComponent } from './../components/chart/chart';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -14,7 +15,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Facebook } from '@ionic-native/facebook';
-
 import { IonicStorageModule } from '@ionic/storage';
 
 export const firebaseConfig = {
@@ -31,7 +31,8 @@ export const firebaseConfig = {
     MyApp,
     HomePage,
     LoginPage,
-    stackValuePipe
+    stackValuePipe,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +49,8 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    ChartComponent
   ],
   providers: [
     DataService,
