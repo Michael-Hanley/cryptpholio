@@ -19,7 +19,9 @@ export class ChartComponent implements OnInit {
       if (object.data.length < 2){
         this.dataAvail = false;
         console.log(this.lineChartData);
-      }})
+      }
+    }
+  )
     
   }
   @Input()

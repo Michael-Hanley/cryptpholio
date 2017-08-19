@@ -26,7 +26,7 @@ export class HomePage implements OnInit, AfterViewInit {
   coinValueChart:Array<any>=[];
   coinTime:Array<any>=[];
   dataReady:boolean=false;
-  chartData:boolean = true; 
+  chartData:Array<boolean> = []; 
 
   constructor(public navCtrl: NavController, private dataService:DataService, afDB: AngularFireDatabase,
     private storage: Storage) {
@@ -84,6 +84,12 @@ export class HomePage implements OnInit, AfterViewInit {
           this.coinTime.push(coinTimeMin);
           this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name});
           this.showInfo.push(true);
+          if(res.length == null){
+            this.chartData.push(false); 
+           }
+           else {
+            this.chartData.push(true); 
+           }
         })
       }
     }
@@ -110,11 +116,17 @@ export class HomePage implements OnInit, AfterViewInit {
       this.dataService.getCoinHistMin(this.searchedCoin)
       .subscribe(res => {res.forEach(
         element => {coinValue.push(element.close),
-        coinTimeMin.push(element.time)
+        coinTimeMin.splice(element.time)
       })
-    this.coinTime.push(coinTimeMin);
-    this.coinValueChart.push({data: coinValue, label: this.allCoins[this.searchedCoin].Name});
-    this.showInfo.push(true);
+    this.coinTime.splice(i, 1, coinTimeMin);
+    this.coinValueChart.splice(i, 1, {data: coinValue, label: this.allCoins[this.searchedCoin].Name});
+    this.showInfo.splice(i,1, true);
+    if(res.length == null){
+      this.chartData.splice(i, 1, false); 
+     }
+     else {
+      this.chartData.splice(i, 1, true); 
+     }
   })
     }
     showInfoToggle(i:number){
@@ -146,6 +158,7 @@ export class HomePage implements OnInit, AfterViewInit {
       this.myCoinsPrice.splice(i, 1);
       this.myAmount.splice(i, 1);
       this.coinValueChart.splice(i, 1);
+      this.chartData.splice(i, 1);
     }
     startApp(){
       let coinValue: Array<any> = [];
@@ -169,12 +182,16 @@ export class HomePage implements OnInit, AfterViewInit {
               element => {coinValue.push(element.close),
               coinTimeMin.push(element.time)
             })
+            console.log(res);            
             this.coinTime.push(coinTimeMin);
             this.coinValueChart.push({data: coinValue, label: this.allCoins[item].Name});
             this.showInfo.push(true);
-            if(coinValue[1] == null){
-                this.chartData = false; 
-              }
+            if(res.length == null){
+              this.chartData.push(false); 
+             }
+             else {
+              this.chartData.push(true); 
+             }
           })
         })}
       )})

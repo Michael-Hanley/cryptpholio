@@ -32,7 +32,7 @@
       <span item-right>{{ myCoinsPrice[i]?.USD }}</span>
     </ion-item>
     <div *ngIf="showInfo[i] == true">
-      <chart 
+      <chart *ngIf="chartData[i] == true"
       [values]="coinValueChart[i]"
       [times]="coinTime[i]"
       ></chart>
