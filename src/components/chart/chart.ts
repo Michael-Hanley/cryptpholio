@@ -39,8 +39,8 @@ export class ChartComponent implements OnInit {
       seconds = "0" + date.getSeconds();
       formattedTime = hours+ ':' + minutes.substr(-2);
       this.lineChartLabels.push(formattedTime);
-        }
-      )
+      }
+    )
   }
   dataAvail:boolean = false;
   public lineChartOptions:any = {

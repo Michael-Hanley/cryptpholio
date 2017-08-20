@@ -25,7 +25,7 @@ export class DataService {
       .catch(this.handleError)
   }
   getCoinHistMin(coin:string): Observable<any> {
-  let params = '&tsym=USD&limit=60&aggregate=3&e=Kraken&extraParams=your_app_name';
+  let params = '&tsym=USD&limit=60&aggregate=3&';
   let queryString = this.coinHistMin+coin+params;
     return this.http.get(queryString)
       .map(this.extractData)
